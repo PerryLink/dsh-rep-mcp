@@ -1,0 +1,61 @@
+{
+  "name": "dsh-rep-mcp",
+  "version": "0.1.0",
+  "description": "MCP server for REP v1 research records: verify seals and snapshot hashes, inspect claims/evidence, and list sealed records over stdio. Works with any MCP client; no DSH runtime required.",
+  "author": "PerryLink contributors",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PerryLink/dsh-rep-mcp.git"
+  },
+  "homepage": "https://github.com/PerryLink/dsh-rep-mcp#readme",
+  "bugs": {
+    "url": "https://github.com/PerryLink/dsh-rep-mcp/issues"
+  },
+  "type": "module",
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "bin": {
+    "dsh-rep-mcp": "./lib/bin.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./lib/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "README.md",
+    "README-zh.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "dsh",
+    "mcp",
+    "rep",
+    "research",
+    "evidence",
+    "verification"
+  ],
+  "engines": {
+    "node": "^22.19.0 || >=24.9.0"
+  },
+  "dependencies": {
+    "@perrylink/dsh-research-core": "0.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^24.13.3",
+    "typescript": "^5.9.0",
+    "vitest": "^3.2.4"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "clean": "node -e \"require('node:fs').rmSync('lib',{recursive:true,force:true})\"",
+    "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.test.json",
+    "test": "vitest run",
+    "verify:package": "node scripts/verify-package.mjs"
+  }
+}
