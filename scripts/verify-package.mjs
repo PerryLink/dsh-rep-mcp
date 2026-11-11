@@ -15,7 +15,11 @@ for (const file of ['lib/index.js', 'lib/index.d.ts', 'lib/bin.js', 'README.md',
 }
 if (pkg.bin?.['dsh-rep-mcp'] !== './lib/bin.js') fail('package.json#bin must point at ./lib/bin.js')
 if (!existsSync(path.join(root, 'lib/bin.js'))) fail('lib/bin.js missing')
-if ((statSync(path.join(root, 'lib/bin.js')).mode & 0o111) === 0) fail('lib/bin.js is not executable')
+// Windows has no POSIX execute bit: npm/npx launch the bin through node, so the
+// bit is meaningless there. Everywhere else the build/postbuild must set it.
+if (process.platform !== 'win32' && (statSync(path.join(root, 'lib/bin.js')).mode & 0o111) === 0) {
+  fail('lib/bin.js is not executable')
+}
 if (pkg.dependencies?.['@perrylink/dsh-research-core'] === undefined) fail('the REP core dependency is required')
 const bin = readFileSync(path.join(root, 'lib/bin.js'), 'utf8')
 if (!bin.startsWith('#!/usr/bin/env node')) fail('lib/bin.js lost its shebang')
