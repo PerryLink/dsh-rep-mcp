@@ -69,12 +69,15 @@ DSH 的 MCP 面板接受任意 stdio server：
 ## 开发
 
 ```sh
-npm install
-npm run typecheck
-npm test
-npm run build
-npm run verify:package
+pnpm install
+pnpm run check:lockfile
+pnpm run typecheck
+pnpm test
+pnpm run build
+pnpm run verify:package
 ```
+
+锁文件按 `pnpm install --lockfile-only` 的原样提交（两段：pnpm 自身的管理文档 + 项目文档），本地 `pnpm install` 不会改写它；`pnpm run check:lockfile` 在它与 `package.json` 不一致或丢失该形式时失败。
 
 测试直接驱动 handler，也覆盖换行分隔的 stdio 循环；fixture 是 `dsh-research-core` 的已密封记录。
 

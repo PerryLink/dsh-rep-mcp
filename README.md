@@ -71,12 +71,15 @@ quotes; snapshot bytes are reported as not checked.
 ## Development
 
 ```sh
-npm install
-npm run typecheck
-npm test
-npm run build
-npm run verify:package
+pnpm install
+pnpm run check:lockfile
+pnpm run typecheck
+pnpm test
+pnpm run build
+pnpm run verify:package
 ```
+
+The lockfile is committed exactly as `pnpm install --lockfile-only` writes it (two documents: pnpm's own package-manager document, then the project document), so a local install does not rewrite it. `pnpm run check:lockfile` fails when the lockfile drifts from `package.json` or loses that form.
 
 Tests drive the handler directly and also exercise the newline-delimited stdio
 loop; the fixture is a sealed REP record from `dsh-research-core`.
